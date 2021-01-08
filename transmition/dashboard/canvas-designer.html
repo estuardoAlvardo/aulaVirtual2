@@ -5,25 +5,54 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Átomo - Aula virtual Activa</title>
+  <title>Átomo Transmition - Aula virtual Activa</title>
   <meta name="description" content="Video conferencia Átomo Soluciones">
 
 
-  <link rel="shortcut icon" href="/demos/logo.png">
-  <link rel="stylesheet" type="text/css" href="/demos/css/emojionearea.min.css">
+  <link rel="shortcut icon" href="/transmition/logo.png">
+  <link rel="stylesheet" type="text/css" href="/transmition/css/emojionearea.min.css">
 
     <!-- Materialized  init -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+    <!-- Compiled and minified CSS -->
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+            
+
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+
+    <!-- alertas  -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+            
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
 
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>           
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+<script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+
+
+
+   <!-- Compiled and minified JavaScript -->
+
 
     <!-- Materialized  finish -->
 
 
-  <script src="/demos/js/jquery.min.js"></script>
-  <link href="/demos/css/bootstrap.min.css" rel="stylesheet">
+  <script src="/transmition/js/jquery.min.js"></script>
+  <link href="/transmition/css/bootstrap.min.css" rel="stylesheet">
   <script src="/node_modules/webrtc-adapter/out/adapter.js"></script>
   <script src="/dist/RTCMultiConnection.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
@@ -31,12 +60,17 @@
 
   <script src="/node_modules/canvas-designer/dev/webrtc-handler.js"></script>
   <script src="/node_modules/canvas-designer/canvas-designer-widget.js"></script>
-  <script src="/demos/js/emojionearea.min.js"></script>
+  <script src="/transmition/js/emojionearea.min.js"></script>
 
   <link rel="stylesheet" href="/dev/getHTMLMediaElement.css">
 <script src="/dev/getHTMLMediaElement.js"></script>
   <!-- <script src="/node_modules/multistreamsmixer/MultiStreamsMixer.js"></script> -->
-
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function() {
+   var elems = document.querySelectorAll('select');
+   var options = document.querySelectorAll('option');
+   var instances = M.FormSelect.init(elems, options); });
+</script>
 <style type="text/css">
 html, body, section, ul, li, nav, a, h1, h2 {
     padding: 10;
@@ -220,11 +254,25 @@ input[disabled], button[disabled] {
 /*imagen de fondo en video*/
 
 
-
 </style>
 
 
-<article style="background-image: url('../fondo.jpeg'); background-size: cover;">
+<div class="fixed-action-btn cuadroNew" style="z-index: 100000">
+  <a class="btn-floating btn-large tooltipped" data-position="top" data-delay="50" data-tooltip="Recargar"  style="background-color: #3742fa; margin-top: -200px;"  onclick="recargarPagina();">
+    <i class="large material-icons">loop</i>
+  </a>
+  
+</div>
+
+<div class="fixed-action-btn cuadroNew" style="z-index: 100000;">
+  <a class="btn-floating btn-large tooltipped" data-position="bottom" data-tooltip="I am a tooltip" style="background-color: #EA2027;"  onclick="finalizarReunion();">
+    <i class="large material-icons">call_end</i>
+  </a>
+  
+</div>
+
+
+<article style="background-color:#130f40;">
  <div class="nav" style="height: 100px; margin-bottom: 5px; margin-top:0; margin-left: 15px;">
       <img src="../liveAtomo.png" style="width: 60px; height: 60px; margin-top: 15px;">  
      <h4 style="margin-top: 15px; margin-left: 15px; color: white;">Átomo Live<br> <span style="font-size: 15px; color: white;" id="nombreUsuario"></span><span id="rolEnviar" style="font-size: 10px; color: white;"></span></h4>
@@ -232,27 +280,46 @@ input[disabled], button[disabled] {
    
  </div>   
 
-<div id="widget-container" style="position: fixed;bottom: 0;right: 0;left: 30%;height: 100%; border-top:0; border-bottom: 0; overflow-y: scroll; box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23); background-image: url('../fondo.jpeg'); background-size: cover; height: 100%;
-   width: 90% ;" ></div>
+<div id="widget-container" style="position: fixed;bottom: 0;right: 0;left: 30%;height: 100%; border-top:0; border-bottom: 0; overflow-y: scroll; box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23); background-color: #ffcdd2; width: 90% ;" ></div>
 <video id="screen-viewer"   playsinline autoplay  >
     
 </video>
 
-<div style="width: 30%; min-height: 100%; position: absolute;left:0; background-image: url('../fondo.jpeg'); background-size: cover;">
+<div style="width: 30%; min-height: 100%; position: absolute;left:0; background-color:#130f40;">
     <video id="main-video"  playsinline  autoplay> </video>
+
+
+<div style="display: none;" id="elegirCamaraDocente">
+   <h4 style="margin-left: 20px; color: white; ">Elegir Camara</h4>
+    
+    <div class="browser-default" style="display: none;">
+        <select class="" id="audioSource" name="mostrar" style="display: none"></select>
+    </div>
+
+
+    <div class="browser-default" style="display: none">
+       <select class="browser-default" id="audioOutput"  style="display: none"></select>
+    </div>
+
+    <div class="col s6 m6 l6">
+            <select class="browser-default" id="videoSource"  style="display: block">  </select><br>
+
+    </div>
+
+</div>
 
 
 
     
 <div class="row" style="margin-left: 10px;">
 
-       <a class="cuadroNew btn-floating btn-large waves-effect waves-light " id="btnMicroActivo" ><i class="material-icons" onclick="muteAudio();" style="background-color: #007bff;">mic_none</i></a>
+       <a class="cuadroNew btn-floating btn-large waves-effect waves-light " id="btnMicroActivo" ><i class="material-icons" onclick="muteAudio();" style="background-color:#f0932b;">mic_none</i></a>
 
       <a class="cuadroNew btn-floating btn-large waves-effect waves-light red"  id="btnMicroInactivo" onclick="activarBtnMicro();" style="display: none;"><i class="material-icons">mic_off</i></a>
 
 
    
-      <a class="cuadroNew btn-floating btn-large waves-effect waves-light " onclick="muteVideo()" id="btnCamaraActivo" style="margin-left: 10px; background-color: #007bff;"><i class="material-icons"  >camera_alt</i></a>
+      <a class="cuadroNew btn-floating btn-large waves-effect waves-light " onclick="muteVideo()" id="btnCamaraActivo" style="margin-left: 10px; background-color:#f0932b;"><i class="material-icons">camera_alt</i></a>
 
       <a class="cuadroNew btn-floating btn-large waves-effect waves-light red" id="btnCamaraInactivo"  onclick="activarBtnCamara();" style="display: none;margin-left: 10px;" ><i class="material-icons" style="">camera</i></a>
 
@@ -270,11 +337,13 @@ input[disabled], button[disabled] {
         <img src="https://image.flaticon.com/icons/svg/811/811885.svg" class="cardBox cuadroNew" width="50" height="50" style="border-radius:100%; background-color:white; padding: 5px; display: none;"   >
 
         <div id="onUserStatusChanged" style="background-color: white; margin-top: -50px;">
+
+
         </div>
          <img src="https://image.flaticon.com/icons/svg/929/929416.svg" id="iconCerrar" class="cardBox cuadroNew" style="width: 30px; height: 30px; margin-top: -60px; position: absolute;   margin-left: 10px; display: none; border-radius: 100px; background-color:#ecf0f1;   " onclick="cerrarListaUsuarios();"> 
     </div><br>
 
-          <a class="cuadroNew btn-floating btn-large waves-effect waves-light tooltipped " data-position="bottom" data-delay="50" data-tooltip="Usuarios"   style="display: block;margin-left: 10px;  background-color: #007bff; margin-top: -50px;" title="Usuario" onclick="mostrarListaUsuarios();" ><i class="material-icons" style="">group</i></a>
+          <a class="cuadroNew btn-floating btn-large waves-effect waves-light tooltipped pulse" data-position="bottom" data-delay="50" data-tooltip="Usuarios"   style="display: block;margin-left: 10px; background-color:#f0932b; margin-top: -50px;" title="Usuario" onclick="mostrarListaUsuarios();" ><i class="material-icons" style="">group</i></a>
          
 
 
@@ -295,7 +364,7 @@ input[disabled], button[disabled] {
     </script>
 
 
-    <div style="margin-top: 20px; margin-left: 20px; position: relative; bottom: 0;background: white; padding-bottom: 20px; width: 85%; background-image: url('../fondo.jpeg'); background-size: cover;">
+    <div style="margin-top: 20px; margin-left: 20px; position: relative; bottom: 0;background: white; padding-bottom: 20px; width: 85%; background-color:#130f40;">
         <div id="conversation-panel"></div>
         <div id="key-press" style="text-align: right; display: none; font-size: 11px;">
             <span style="vertical-align: middle;"></span>
@@ -322,7 +391,19 @@ input[disabled], button[disabled] {
 </div>
 </article>
 
+<div id="imprimir" style="position: absolute; background-color: white; display: none; padding: 20px;">
+  <img src="../logo.png" width="100" height="100" style="float: left;">
+  <h1 style="">Listado Usuarios Conectados</h1>
+  <h4 id="fechaDescargarRepjorte"></h4>
+
+<ul id="listadoUsuarios">
+</ul>
+</div>
+
 <script>
+
+
+
 (function() {
     var params = {},
         r = /([^&=]+)=?([^&]*)/g;
@@ -376,7 +457,173 @@ designer.addSyncListener(function(data) {
 });
  
 
+//funcion para preguntar ingresod e un alumno
 
+
+
+
+
+
+
+
+//funcion para finalizar reunion
+
+function finalizarReunion(){
+   if (params.open === true || params.open === 'true') {
+    var pregunta=  confirm("Usted es el Docente desea finalizar la reunión");
+
+    if(pregunta==true){
+       this.window.close();
+     }
+
+}else{
+
+  var pregunta = confirm("Desea salirse de la reunión");
+
+  if(pregunta==true){
+           this.window.close();
+           
+           }
+}
+
+
+}
+
+//funcion para recargar la reunion
+
+function recargarPagina(){
+
+     if (params.open === true || params.open === 'true') {
+   var pregunta=   confirm("Usted es el Docente desea reiniciar la reunión, está acción desconectara a todos sus alumnos debera darle la instrucción que recarguen la página");
+
+   if(pregunta==true){
+          location.reload();
+
+            }
+}else{
+
+    var pregunta= confirm("Desea reiniciar la reunión");
+      if(pregunta==true){ 
+
+      location.reload();           
+}
+
+}
+
+
+
+
+}
+
+//codigo para detectar todos los dispositivos ----------------Inicio
+
+const videoElement = document.getElementById('main-video');
+const audioInputSelect = document.querySelector('select#audioSource');
+const audioOutputSelect = document.querySelector('select#audioOutput');
+const videoSelect = document.querySelector('select#videoSource');
+const selectors = [audioInputSelect, audioOutputSelect, videoSelect];
+
+audioOutputSelect.disabled = !('sinkId' in HTMLMediaElement.prototype);
+
+function gotDevices(deviceInfos) {
+  // Handles being called several times to update labels. Preserve values.
+  const values = selectors.map(select => select.value);
+  selectors.forEach(select => {
+    while (select.firstChild) {
+      select.removeChild(select.firstChild);
+    }
+  });
+  for (let i = 0; i !== deviceInfos.length; ++i) {
+    const deviceInfo = deviceInfos[i];
+    const option = document.createElement('option');
+    option.value = deviceInfo.deviceId;
+    if (deviceInfo.kind === 'audioinput') {
+      option.text = deviceInfo.label || `microphone ${audioInputSelect.length + 1}`;
+      audioInputSelect.appendChild(option);
+    } else if (deviceInfo.kind === 'audiooutput') {
+      option.text = deviceInfo.label || `speaker ${audioOutputSelect.length + 1}`;
+      audioOutputSelect.appendChild(option);
+    } else if (deviceInfo.kind === 'videoinput') {
+      option.text = deviceInfo.label || `camera ${videoSelect.length + 1}`;
+      videoSelect.appendChild(option);
+    } else {
+      console.log('Some other kind of source/device: ', deviceInfo);
+    }
+  }
+  selectors.forEach((select, selectorIndex) => {
+    if (Array.prototype.slice.call(select.childNodes).some(n => n.value === values[selectorIndex])) {
+      select.value = values[selectorIndex];
+
+    }
+  });
+}
+
+navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
+
+// Attach audio output device to video element using device/sink ID.
+function attachSinkId(element, sinkId) {
+  if (typeof element.sinkId !== 'undefined') {
+    element.setSinkId(sinkId)
+        .then(() => {
+          console.log(`Success, audio output device attached: ${sinkId}`);
+        })
+        .catch(error => {
+          let errorMessage = error;
+          if (error.name === 'SecurityError') {
+            errorMessage = `You need to use HTTPS for selecting audio output device: ${error}`;
+          }
+          console.error(errorMessage);
+          // Jump back to first output device in the list as it's the default.
+          audioOutputSelect.selectedIndex = 0;
+        });
+  } else {
+    console.warn('Browser does not support output device selection.');
+  }
+}
+
+function changeAudioDestination() {
+  const audioDestination = audioOutputSelect.value;
+  attachSinkId(videoElement, audioDestination);
+}
+
+function gotStream(stream) {
+  window.stream = stream; // hacer que la transmisión esté disponible para la consola
+  videoElement.srcObject = stream;
+    replaceScreenTrack(stream);
+
+// Actualizar lista de botones en caso de que las etiquetas estén disponibles
+  return navigator.mediaDevices.enumerateDevices();
+
+}
+
+function handleError(error) {
+  console.log('navigator.MediaDevices.getUserMedia error: ', error.message, error.name);
+}
+
+function start() {
+  if (window.stream) {
+    window.stream.getTracks().forEach(track => {
+      track.stop();
+    });
+  }
+  const audioSource = audioInputSelect.value;
+  const videoSource = videoSelect.value;
+  const constraints = {
+    video: {deviceId: videoSource ? {exact: videoSource} : undefined}
+  };
+  navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(gotDevices).catch(handleError);
+
+
+}
+
+audioInputSelect.onchange = changeAudioDestination;
+audioOutputSelect.onchange = changeAudioDestination;
+videoSelect.onchange = start;
+
+
+//start();
+
+//codigo para detectar todos los dispositivos -----------------Fin
 
 
 
@@ -407,10 +654,13 @@ designer.setTools({
     undo: true
 });
  
+  $('#elegirCamaraDocente').css('display','block');
+
 
   }else{
 
-     Materialize.toast('Usted no tiene permiso para usar la pizarra!', 10000, 'rounded');
+          M.toast({html: 'Usted no tiene permiso para usar la pizarra!', classes: 'rounded'});
+
 
 designer.setTools({
     pencil: false,
@@ -438,6 +688,8 @@ designer.setTools({
     $('#btnCamaraActivo').css("display","none");
 
     //estilos para compartir pantalla alumno
+
+ 
 
   }
 
@@ -480,7 +732,7 @@ function activarBtnMicro(){
     $('#btnMicroActivo').css("display","block");
     $('#btnMicroInactivo').css("display","none");
 
- Materialize.toast('Se activo microfono!', 3000, 'rounded')
+      M.toast({html: 'Se activo microfono!!', classes: 'rounded'});
 
 
   }
@@ -496,14 +748,69 @@ enmudecer.srcObject.getVideoTracks().forEach(t=>t.enabled = !t.enabled);
     $('#btnCamaraActivo').css("display","block");
     $('#btnCamaraInactivo').css("display","none");
 
- Materialize.toast('Se activo camara!', 3000, 'rounded')
+      M.toast({html: 'Se activo camara!', classes: 'rounded'});
 
 
 }
     
 }
 
+//FUNCION PARA ACEPTAR A UN ALUMNO O DENEGAR LA ENTRADA
+connection.onNewParticipant = function(participantId, userPreferences,extraFullName) {
+    // if OfferToReceiveAudio/OfferToReceiveVideo should be enabled for specific users
 
+  //detectamos tipo usuario
+
+ if (params.open === true || params.open === 'true') {
+
+swal({
+  title: "Nuevo alumno",
+  text: extraFullName+' se esta conectando, lo deseas aceptar?',
+  icon: "info",
+  buttons: true,
+  dangerMode: true,
+}).then((willDelete) => {
+
+  if (willDelete) {
+    swal("Se concedio accesso a "+participantId, {
+      icon: "success",
+    });
+
+
+    userPreferences.localPeerSdpConstraints.OfferToReceiveAudio = true;
+    userPreferences.localPeerSdpConstraints.OfferToReceiveVideo = true;
+
+    userPreferences.dontAttachStream = false; // according to situation
+    userPreferences.dontGetRemoteStream = false;  // according to situation
+
+    // below line must be included. Above all lines are optional.
+    // if below line is NOT included; "join-request" will be considered rejected.
+    connection.acceptParticipationRequest(participantId, userPreferences);
+  }else{
+
+   // userPreferences.localPeerSdpConstraints.OfferToReceiveAudio = false;
+  //  userPreferences.localPeerSdpConstraints.OfferToReceiveVideo = false;
+   // connection.disconnectWith(participantId);
+   // connection.getAllParticipants().forEach(function(participantId) {
+   // connection.disconnectWith(participantId);
+
+
+
+
+
+
+  }
+
+});
+
+}else{
+
+    connection.acceptParticipationRequest(participantId, userPreferences);
+
+
+
+}
+};
 
 //mostrar listado de usuarios conectados
 connection.onUserStatusChanged = function(event) {
@@ -519,10 +826,14 @@ connection.onUserStatusChanged = function(event) {
 
         if(params.open==true || params.open=='true'){
         rolEnviar.innerHTML= '<em>(Docente) </em>';
+        var styleMostrar='display:block;';
+
 
 
             }else{
                 rolEnviar.innerHTML= '<em>(Alumno) </em>';
+                 var styleMostrar='display:none;';
+
             }
 
     if(!names.length) {
@@ -531,7 +842,7 @@ connection.onUserStatusChanged = function(event) {
         names = [connection.extra.userFullName || 'Tú'].concat(names);
     }
 
-    infoBar.innerHTML = '<b>Usuarios Activos:</b> <br>* ' + names.join('<br>* ');
+    infoBar.innerHTML = '<a onclick="silenciarATodos();" class="waves-effect waves-light btn-small blue" style="color:white;'+styleMostrar+' width:100px; ">Silenciar a todos</a><b>Usuarios Activos:</b><a class="btn-floating pink" onclick="descargarUser(\''+names+'\');" style=" float:right;'+styleMostrar+'" ><i class="material-icons">file_download</i></a><div class="usuariosImprimirLive">*'+ names.join('</div><br>*');
     
     nombreUsuario.innerHTML='<em>Tú: '+connection.extra.userFullName+'</em>';
 
@@ -541,7 +852,125 @@ connection.onUserStatusChanged = function(event) {
 
 
 
-        
+
+//expulsar a un alumno
+function expulsarAlumno(idAlumnoExpulsar,nombreAlumno,idStream){
+
+     var pregunta =  confirm('Estas seguro que quiere expulsar al alumno '+nombreAlumno);
+
+     var videoApagar=  document.getElementById(idAlumnoExpulsar);
+     var videoExpulsar = document.querySelector('video[data-streamid="' + idStream + '"]');
+
+    if(pregunta==true){
+
+      //no funciona esta linea de codigo
+        connection.streamEvents[idStream].stream.mute('video');
+
+
+        connection.resetTrack(idAlumnoExpulsar);
+        connection.removeStream(idStream);
+        connection.disconnectWith(idAlumnoExpulsar);
+        connection.deletePeer(idAlumnoExpulsar);
+        connection.renegotiate();
+      
+      connection.onclose = function(event) {
+    var remoteUserId = idAlumnoExpulsar;
+    var remoteUserFullName = nombreAlumno;
+
+    connection.onUserStatusChanged(event);
+   // alert('data connection closed between you and ' + remoteUserFullName);
+};
+
+
+
+ 
+      //videoExpulsar.parentNode.removeChild(videoExpulsar);
+    $('#videoActivo'+idAlumnoExpulsar).css("display","none");
+    $('#audioActivo'+idAlumnoExpulsar).css("display","none");
+    $('#expulsarAlumno'+idStream).css("display","none");
+    $('#nombreAlumno'+idStream).css("display","none");
+
+
+
+    replaceTrack(videoExpulsar, idAlumnoExpulsar);
+
+
+ }   
+ 
+
+}
+
+
+
+
+
+function descargarUser(arrayUser){
+var fecha = new Date(); //Fecha actual
+  var mes = fecha.getMonth()+1; //obteniendo mes
+  var dia = fecha.getDate(); //obteniendo dia
+  var ano = fecha.getFullYear(); //obteniendo año
+  var hora = fecha.getHours()+':'+fecha.getMinutes()+':'+fecha.getSeconds();
+  if(dia<10)
+    dia='0'+dia; //agrega cero si el menor de 10
+  if(mes<10)
+    mes='0'+mes;
+
+$('#fechaDescargarRepjorte').text('Fecha Reporte '+dia+'/'+mes+'/'+ano+' '+hora);
+var coma=',';
+dividirCadena(arrayUser, ',');
+printDiv();
+
+
+}
+
+
+function dividirCadena(cadenaADividir,separador) {
+   var arrayDeCadenas = cadenaADividir.split(separador);
+   //document.write('<p>La cadena original es: "' + cadenaADividir + '"');
+   //document.write('<br>El separador es: "' + separador + '"');
+  // document.write("<br>El array tiene " + arrayDeCadenas.length + " elementos: ");
+
+
+
+   for (var i=0; i < arrayDeCadenas.length; i++) {
+      //document.write(arrayDeCadenas[i] + " / ");
+     var li = document.createElement("li");
+      var ul = document.getElementById("listadoUsuarios");
+      if(i==0){
+      li.appendChild(document.createTextNode(i+'. '+arrayDeCadenas[i]+'--(Docente)'));
+      ul.appendChild(li);
+    }else{
+
+      li.appendChild(document.createTextNode(i+'. '+arrayDeCadenas[i]+'--(Alumno)'));
+      ul.appendChild(li);
+
+    }
+
+   }
+
+}
+
+
+function printDiv() { 
+           // alert('hola');
+
+           $('#imprimir').css('display','block');
+            var divContents = document.getElementById("imprimir").innerHTML; 
+            var a = window.open('', '', 'height=700, width=700'); 
+            a.document.write('<html>'); 
+            a.document.write('<body > <h1><br>'); 
+            a.document.write(divContents); 
+            a.document.write('</body></html>'); 
+            a.document.close(); 
+            a.print(); 
+           $('#imprimir').css('display','none');
+
+
+        } 
+
+
+
+
 ///para sincronizar pizarra
 connection.onopen = function(event) {
 
@@ -566,6 +995,9 @@ connection.onclose = connection.onerror = connection.onleave = function(event) {
 
 
 };
+
+
+
 
 
 //funcion para chat
@@ -637,8 +1069,8 @@ function muteAudio(){
 
     $('#btnMicroActivo').css("display","none");
     $('#btnMicroInactivo').css("display","block");
- Materialize.toast('Se desactivo microfono!', 3000, 'rounded');
 
+      M.toast({html: 'Se desactivo microfono!', classes: 'rounded'});
 
 
   }
@@ -646,7 +1078,6 @@ function muteAudio(){
 
 
 //desactivar audio alumnos
-
 function desactivarAudioAlumnos(idAudioDesactivar){
 
 if (params.open === true || params.open === 'true') { }else{
@@ -659,7 +1090,7 @@ enmudecer.srcObject.getAudioTracks().forEach(t=>t.enabled = !t.enabled);
 
     $('#audioActivo'+idAudioDesactivar).css("display","none");
     $('#audioInactivo'+idAudioDesactivar).css("display","block");
-     Materialize.toast('Se desactivo microfono!', 3000, 'rounded');
+           M.toast({html: 'Se desactivo microfono!', classes: 'rounded'});
 
 }
 
@@ -677,7 +1108,7 @@ enmudecer.srcObject.getAudioTracks().forEach(t=>t.enabled = !t.enabled);
 
     $('#audioActivo'+idAudioDesactivar).css("display","block");
     $('#audioInactivo'+idAudioDesactivar).css("display","none");
-    Materialize.toast('Se activo microfono!', 3000, 'rounded');
+    M.toast({html: 'Se activo microfono!', classes: 'rounded'});
 
 
 }
@@ -698,7 +1129,7 @@ enmudecer.srcObject.getVideoTracks().forEach(t=>t.enabled = !t.enabled);
 
     $('#btnCamaraActivo').css("display","none");
     $('#btnCamaraInactivo').css("display","block");
-    Materialize.toast('Se desactivo camara!', 3000, 'rounded');
+     M.toast({html: 'Se desactivo camara!', classes: 'rounded'});
 
 }
 
@@ -719,7 +1150,7 @@ enmudecer.srcObject.getVideoTracks().forEach(t=>t.enabled = !t.enabled);
 
     $('#videoActivo'+idVideoDesactivar).css("display","none");
     $('#videoInactivo'+idVideoDesactivar).css("display","block");
-    Materialize.toast('Se desactivo la camara!', 3000, 'rounded');
+    M.toast({html: 'Se desactivo la camara!', classes: 'rounded'});
 
 }
 
@@ -739,7 +1170,7 @@ enmudecer.srcObject.getVideoTracks().forEach(t=>t.enabled = !t.enabled);
 
     $('#videoActivo'+idVideoDesactivar).css("display","block");
     $('#videoInactivo'+idVideoDesactivar).css("display","none");
-    Materialize.toast('Se activo la camara!', 3000, 'rounded');
+    M.toast({html: 'Se activo la camara!', classes: 'rounded'});
 
 }
 
@@ -747,6 +1178,50 @@ enmudecer.srcObject.getVideoTracks().forEach(t=>t.enabled = !t.enabled);
 }
 
 
+function silenciarATodos(){
+  var camaras=$('.audioGeneral').length;
+  var j=0;
+  var i=0;
+  var microfonos = [camaras];
+  var elementoSilenciar;
+
+
+  //insertamos en el array los ids
+    for(j=0; j<=camaras;j++){
+
+        microfonos[j] = [$('.audioGeneral').attr('id')];
+
+      }
+  
+   
+    //alert(camaras);
+    if(microfonos==undefined || microfonos=='' ){
+
+    M.toast({html: 'Aun no hay alumnos conectados!', classes: 'rounded'});
+
+    }else{
+
+     //mostramos los ids detectados iniciamos en 1 porque cero es el del anfitrion
+      for(i=1; i<=camaras; i++){
+
+        // alert(microfonos[i]);
+         //alert('audioActivo'+microfonos[i]);
+         elementoSilenciar=document.getElementById(microfonos[i]);
+         elementoSilenciar.srcObject.getAudioTracks().forEach(t=>t.enabled = !t.enabled);
+         $('#audioActivo'+microfonos[i]).css("display","none");
+         $('#audioInactivo'+microfonos[i]).css("display","block");
+         M.toast({html: 'Se silenciaron todos los microfonos!', classes: 'rounded'});
+
+    }
+    
+}
+      //M.toast({html: 'Desactivando micrfono a todos!', classes: 'rounded'});
+
+
+}
+
+
+//silenciar todos los audios
 
 
 
@@ -782,9 +1257,17 @@ connection.onstream = function(event) {
         otherVideos.appendChild(event.mediaElement);
 
 
+
+        $('#'+event.streamid).addClass('audioGeneral');
+
+
+
        if (params.open === true || params.open === 'true'){
 
-             Materialize.toast('Se unio un nuevo alumno' , 3000, 'rounded');
+  M.toast({html: 'Se unio un nuevo alumno!', classes: 'rounded'});
+$('#other-videos').append('<div id="controlsIndividual'+event.streamid+'" style=""> </div>');
+$('<a class="btn-floating red cuadroNew" title="Expulsar" id="expulsarAlumno'+event.streamid+'" style="margin-top:-80px;" onclick="expulsarAlumno(\''+event.userid+'\',\''+event.extra.userFullName+'\',\''+event.streamid+'\');"> <i class="material-icons">cancel</i></a> <p  id="nombreAlumno'+event.streamid+'" style="margin-top:-30px; margin-left:10px; color:white;"><strong>'+event.extra.userFullName+'</strong></p>').appendTo('#controlsIndividual'+event.streamid);
+  
 
 
        }else{
@@ -795,7 +1278,8 @@ connection.onstream = function(event) {
 
            if (event.userid === connection.userid) {
         
-           $('<div class="row" style="margin-left:10px;"><a class="cuadroNew btn-floating btn-small waves-effect waves-light " id="audioActivo'+event.streamid+'" ><i class="material-icons" onclick="desactivarAudioAlumnos(\''+event.streamid+'\');"  style="background-color: #007bff;">mic_none</i></a><a class="cuadroNew btn-floating btn-small waves-effect waves-light red" onclick="activarAudioAlumnos(\''+event.streamid+'\');"   id="audioInactivo'+event.streamid+'" onclick="activarBtnMicro();" style="display: none;"><i class="material-icons">mic_off</i></a><a class="cuadroNew btn-floating btn-small waves-effect waves-light " onclick="desactivarVideoAlumnos(\''+event.streamid+'\');" id="videoActivo'+event.streamid+'" style="margin-left: 10px; background-color: #007bff;"><i class="material-icons"  >camera_alt</i></a><a class="cuadroNew btn-floating btn-small waves-effect waves-light red" id="videoInactivo'+event.streamid+'"  onclick="activarVideoAlumnos(\''+event.streamid+'\');" style="display: none;margin-left: 10px;" ><i class="material-icons" style="">camera</i></a></div>').appendTo( '#controlsIndividual'+event.streamid);
+           $('<div class="row" style="margin-left:10px;"><a class="cuadroNew btn-floating btn-small waves-effect waves-light " id="audioActivo'+event.streamid+'" ><i class="material-icons" onclick="desactivarAudioAlumnos(\''+event.streamid+'\');"  style="background-color: #e67e22;">mic_none</i></a><a class="cuadroNew btn-floating btn-small waves-effect waves-light red" onclick="activarAudioAlumnos(\''+event.streamid+'\');"   id="audioInactivo'+event.streamid+'" onclick="activarBtnMicro();" style="display: none;"><i class="material-icons">mic_off</i></a><a class="cuadroNew btn-floating btn-small waves-effect waves-light " onclick="desactivarVideoAlumnos(\''+event.streamid+'\');" id="videoActivo'+event.streamid+'" style="margin-left: 10px; background-color: #e67e22;"><i class="material-icons"  >camera_alt</i></a><a class="cuadroNew btn-floating btn-small waves-effect waves-light red" id="videoInactivo'+event.streamid+'"  onclick="activarVideoAlumnos(\''+event.streamid+'\');" style="display: none;margin-left: 10px;" ><i class="material-icons" style="">camera</i></a></div>').appendTo( '#controlsIndividual'+event.streamid);
+
 
       
         //$( '<div class="cuadroNew cardBox"  onclick="desactivarAudioAlumnos(\''+event.streamid+'\');"  style="border-radius:50px; background-color: white; width: 30px;"  ><img src="https://image.flaticon.com/icons/svg/3163/3163456.svg" width="30" height="30"  ></div>' ).appendTo( '#other-videos' );
@@ -805,6 +1289,8 @@ connection.onstream = function(event) {
        // $( '<div class="cuadroNew cardBox"  style="border-radius:50px; background-color: white; width: 30px; margin-top: -15px; margin-left: 40px;" onclick="desactivarVideoAlumnos(\''+event.streamid+'\');"><img src="https://image.flaticon.com/icons/svg/3039/3039381.svg" width="30" height="30" ></div>' ).appendTo( '#other-videos' );
 
      }
+
+
        
     }
 
@@ -813,6 +1299,7 @@ connection.onstream = function(event) {
 
     connection.onUserStatusChanged(event);
 };
+
 
 connection.onstreamended = function(event) {
     var video = document.querySelector('video[data-streamid="' + event.streamid + '"]');
@@ -823,7 +1310,8 @@ connection.onstreamended = function(event) {
 
     $('#videoActivo'+event.streamid).css("display","none");
     $('#audioActivo'+event.streamid).css("display","none");
-    Materialize.toast('Se desconecto un alumno' , 3000, 'rounded');
+    M.toast({html: 'Se desconecto un alumno!', classes: 'rounded'});
+
 
             return;
         }
@@ -971,7 +1459,8 @@ document.getElementById('btn-attach-file').onclick = function() {
     });
 
 }else{
- Materialize.toast('No tienes permiso para subir archivos!', 3000, 'rounded');
+     M.toast({html: 'No tienes permiso para subir archivos!', classes: 'rounded'});
+
 }
 };
 
@@ -1237,9 +1726,10 @@ function replaceScreenTrack(stream) {
 
 $('#btn-share-screen').click(function() {
     if(!window.tempStream) {
-         Materialize.toast('No tienes permiso para compartir pantalla.!', 3000, 'rounded');
+           M.toast({html: 'No tienes permiso para compartir pantalla.!', classes: 'rounded'});
+
         return;
-    }
+  }
 
 
 
@@ -1251,7 +1741,7 @@ $('#btn-share-screen').click(function() {
         navigator.mediaDevices.getDisplayMedia({video:true,audio:true}).then(stream => {
             replaceScreenTrack(stream);
         }, error => {
-        Materialize.toast('No se pudo compartir.!', 3000, 'rounded');
+        M.toast({html: 'No se pudo compartir.!', classes: 'rounded'});
 
 
         });
@@ -1262,7 +1752,8 @@ $('#btn-share-screen').click(function() {
             replaceScreenTrack(stream);
         }, error => {
 
-        Materialize.toast('No se pudo compartir.!', 3000, 'rounded');
+                M.toast({html: 'No se pudo compartir.!', classes: 'rounded'});
+
 
         });
     }
@@ -1270,12 +1761,13 @@ $('#btn-share-screen').click(function() {
         navigator.getDisplayMedia({video:true,audio:true}).then(stream => {
             replaceScreenTrack(stream);
         }, error => {
-            Materialize.toast('No se pudo compartir.!', 3000, 'rounded');
+                            M.toast({html: 'No se pudo compartir.!', classes: 'rounded'});
 
         });
     }
     else {
-        Materialize.toast('getDisplayMedia API. no funciona en tu navegador!', 3000, 'rounded');
+          M.toast({html: 'getDisplayMedia API. no funciona en tu navegador!', classes: 'rounded'});
+
 
     }
 
