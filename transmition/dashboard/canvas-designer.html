@@ -281,12 +281,14 @@ input[disabled], button[disabled] {
  </div>   
 
 <div id="widget-container" style="position: fixed;bottom: 0;right: 0;left: 30%;height: 100%; border-top:0; border-bottom: 0; overflow-y: scroll; box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23); background-color: #ffcdd2; width: 90% ;" ></div>
-<video id="screen-viewer"   playsinline autoplay  >
+
+
+<video id="screen-viewer"  playsinline autoplay  >
     
 </video>
 
 <div style="width: 30%; min-height: 100%; position: absolute;left:0; background-color:#130f40;">
-    <video id="main-video"  playsinline  autoplay> </video>
+    <video id="main-video" controls  playsinline  autoplay> </video>
 
 
 <div style="display: none;" id="elegirCamaraDocente">
@@ -434,9 +436,17 @@ connection.socketMessageEvent = 'canvas-dashboard-demo';
 connection.autoCloseEntireSession = true;
 
 // https://www.rtcmulticonnection.org/docs/maxParticipantsAllowed/
-connection.maxParticipantsAllowed = 1000;
+connection.maxParticipantsAllowed = 100;
 // establecer el valor 2 para la conexión uno a uno
 // connection.maxParticipantsAllowed = 2;
+connection.bandwidth = {
+    audio: 25,  // 50 kbps
+    video: 100, // 256 kbps
+    screen: 300 // 300 kbps
+};
+
+
+
 
 
 // aquí va el diseñador de lienzos
@@ -462,6 +472,16 @@ designer.addSyncListener(function(data) {
 
 
 
+//detectar si la conexion es inestable
+
+
+
+if(connection.isLowBandwidth==true){
+      M.toast({html: 'Tu conexión de internet es inestable :( ', classes: 'rounded'});
+
+
+}
+
 
 
 
@@ -473,6 +493,22 @@ function finalizarReunion(){
     var pregunta=  confirm("Usted es el Docente desea finalizar la reunión");
 
     if(pregunta==true){
+
+      const valores = window.location.search;
+
+const urlParams = new URLSearchParams(valores);
+
+var nombreProfesor = urlParams.get('userFullName');
+
+//alert(nombreProfesor);
+          //datos de parametro session
+   // var nombreProfesor = getParameterByName('userFullName');
+    var estatus=2;
+
+   // window.location.href = 'https://elprado.atomosuite.com/conection/actualizarAulavirtual.php?nombreProfesor='+nombreProfesor+'&estatus='+estatus;
+
+
+
        this.window.close();
      }
 
@@ -640,9 +676,9 @@ designer.setTools({
     line: true,
     arrow: true,
     dragSingle: true,
-    dragMultiple: true,
-    arc: true,
-    rectangle: true,
+    dragMultiple: false,
+    arc: false,
+    rectangle: false,
     quadratic: false,
     bezier: false,
     marker: true,
@@ -655,6 +691,43 @@ designer.setTools({
 });
  
   $('#elegirCamaraDocente').css('display','block');
+
+
+connection.session = {
+            audio: true,
+            video: true,
+            data: true
+        };
+
+
+
+connection.sdpConstraints.mandatory = {
+    OfferToReceiveAudio: true,
+    OfferToReceiveVideo: true
+};
+
+
+//restringirmos video obtenido
+connection.mediaConstraints = {
+    audio: {
+
+    sampleSize: 32,
+    channelCount: 2
+  
+    },
+    video: {
+        mandatory: {
+            minFrameRate: 12,
+            maxFrameRate: 12,
+            minAspectRatio: 1.77
+
+        },
+        optional: [{
+          facingMode: 'user'
+        }]
+    }
+};
+
 
 
   }else{
@@ -689,7 +762,42 @@ designer.setTools({
 
     //estilos para compartir pantalla alumno
 
- 
+ connection.session = {
+            audio: true,
+            video: true,
+            data: true
+        };
+
+
+
+connection.sdpConstraints.mandatory = {
+    OfferToReceiveAudio: true,
+    OfferToReceiveVideo: true
+};
+
+
+//restringirmos video obtenido
+connection.mediaConstraints = {
+    audio: {
+
+    sampleSize: 32,
+    channelCount: 2
+  
+    },
+    video: {
+        mandatory: {
+            minFrameRate: 12,
+            maxFrameRate: 12,
+            minAspectRatio: 1.77
+
+        },
+        optional: [{
+          facingMode: 'user'
+        }]
+    }
+};
+
+
 
   }
 
@@ -703,18 +811,7 @@ connection.enableFileSharing = true;
 
 
 
-connection.session = {
-            audio: true,
-            video: true,
-            data: true
-        };
 
-
-
-connection.sdpConstraints.mandatory = {
-    OfferToReceiveAudio: true,
-    OfferToReceiveVideo: true
-};
 
 
 
@@ -754,7 +851,7 @@ enmudecer.srcObject.getVideoTracks().forEach(t=>t.enabled = !t.enabled);
 }
     
 }
-
+/*
 //FUNCION PARA ACEPTAR A UN ALUMNO O DENEGAR LA ENTRADA
 connection.onNewParticipant = function(participantId, userPreferences,extraFullName) {
     // if OfferToReceiveAudio/OfferToReceiveVideo should be enabled for specific users
@@ -810,7 +907,13 @@ swal({
 
 
 }
+
+
+
+
 };
+
+*/
 
 //mostrar listado de usuarios conectados
 connection.onUserStatusChanged = function(event) {
@@ -1062,6 +1165,7 @@ connection.onmessage = function(event) {
 function muteAudio(){
 
     if (params.open === true || params.open === 'true') {
+    
     var enmudecer= document.getElementById('main-video');
     
     enmudecer.srcObject.getAudioTracks().forEach(t=>t.enabled = !t.enabled);
@@ -1191,6 +1295,7 @@ function silenciarATodos(){
 
         microfonos[j] = [$('.audioGeneral').attr('id')];
 
+
       }
   
    
@@ -1204,7 +1309,7 @@ function silenciarATodos(){
      //mostramos los ids detectados iniciamos en 1 porque cero es el del anfitrion
       for(i=1; i<=camaras; i++){
 
-        // alert(microfonos[i]);
+        alert(microfonos[i]);
          //alert('audioActivo'+microfonos[i]);
          elementoSilenciar=document.getElementById(microfonos[i]);
          elementoSilenciar.srcObject.getAudioTracks().forEach(t=>t.enabled = !t.enabled);
@@ -1278,7 +1383,7 @@ $('<a class="btn-floating red cuadroNew" title="Expulsar" id="expulsarAlumno'+ev
 
            if (event.userid === connection.userid) {
         
-           $('<div class="row" style="margin-left:10px;"><a class="cuadroNew btn-floating btn-small waves-effect waves-light " id="audioActivo'+event.streamid+'" ><i class="material-icons" onclick="desactivarAudioAlumnos(\''+event.streamid+'\');"  style="background-color: #e67e22;">mic_none</i></a><a class="cuadroNew btn-floating btn-small waves-effect waves-light red" onclick="activarAudioAlumnos(\''+event.streamid+'\');"   id="audioInactivo'+event.streamid+'" onclick="activarBtnMicro();" style="display: none;"><i class="material-icons">mic_off</i></a><a class="cuadroNew btn-floating btn-small waves-effect waves-light " onclick="desactivarVideoAlumnos(\''+event.streamid+'\');" id="videoActivo'+event.streamid+'" style="margin-left: 10px; background-color: #e67e22;"><i class="material-icons"  >camera_alt</i></a><a class="cuadroNew btn-floating btn-small waves-effect waves-light red" id="videoInactivo'+event.streamid+'"  onclick="activarVideoAlumnos(\''+event.streamid+'\');" style="display: none;margin-left: 10px;" ><i class="material-icons" style="">camera</i></a></div>').appendTo( '#controlsIndividual'+event.streamid);
+           $('<div class="row" style="margin-left:10px;"><a class="cuadroNew btn-floating btn-small waves-effect waves-light " id="audioActivo'+event.streamid+'" ><i class="material-icons" onclick="desactivarAudioAlumnos(\''+event.streamid+'\');"  style="background-color: #e67e22;">mic_none</i></a><a class="cuadroNew btn-floating btn-small waves-effect waves-light red" onclick="activarAudioAlumnos(\''+event.streamid+'\');"   id="audioInactivo'+event.streamid+'" onclick="activarBtnMicro();" style="display: none;"><i class="material-icons">mic_off</i></a><a class="cuadroNew btn-floating btn-small waves-effect waves-light " onclick="desactivarVideoAlumnos(\''+event.streamid+'\');" id="videoActivo'+event.streamid+'" style="margin-left: 10px; background-color: #e67e22; display:none;"><i class="material-icons"  >camera_alt</i></a><a class="cuadroNew btn-floating btn-small waves-effect waves-light red" id="videoInactivo'+event.streamid+'"  onclick="activarVideoAlumnos(\''+event.streamid+'\');" style="display: none;margin-left: 10px;" ><i class="material-icons" style="">camera</i></a></div>').appendTo( '#controlsIndividual'+event.streamid);
 
 
       
@@ -1311,6 +1416,8 @@ connection.onstreamended = function(event) {
     $('#videoActivo'+event.streamid).css("display","none");
     $('#audioActivo'+event.streamid).css("display","none");
     M.toast({html: 'Se desconecto un alumno!', classes: 'rounded'});
+    //alert(event.streamid);
+    $('#controlsIndividual'+event.streamid).css('display',"none");
 
 
             return;
